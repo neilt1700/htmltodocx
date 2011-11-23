@@ -1,8 +1,9 @@
 <?php
 /**
-*  Example of use of HTML converter with PHPWord
+*  Example of use of HTML to docx converter
 */
 
+// Load the files we need:
 require_once 'phpword/PHPWord.php';
 require_once 'simplehtmldom/simple_html_dom.php';
 require_once 'htmlconverter/h2d_htmlconverter.php';
@@ -24,23 +25,22 @@ $html_dom->load('<html><body>' . $html . '</body></html>');
 $html_dom_array = $html_dom->find('html',0)->children();
 
 // Provide some initial settings:
-
 $initial_state = array(
       'current_style' => array('size' => '11'),
-      'style_sheet' => h2d_styles(),
+      'style_sheet' => h2d_styles(), // This is the "style sheet" in styles.inc
       'parents' => array(0 => 'body'), // Our parent is body
       'list_depth' => 0, // This is the current depth of any current list
       'context' => 'section', // Possible values - section, footer or header
       'base_root' => 'http://test.local', // Required for link elements
       'base_path' => '/', // Required for link elements
-      'pseudo_list' => TRUE, // Word lists not yet supported
+      'pseudo_list' => TRUE, // NOTE: Word lists not yet supported (TRUE is the only option at present)
       'pseudo_list_indicator_font_name' => 'Wingdings', // Bullet indicator font
       'pseudo_list_indicator_font_size' => '7', // Bullet indicator size
       'pseudo_list_indicator_character' => 'l ', // Gives a circle bullet point with wingdings
       );    
 
+// Convert the HTML and put it into the PHPWord object
 h2d_insert_html($section, $html_dom_array[0]->nodes, $initial_state);
-
 
 // Save File
 $h2d_file_uri = tempnam('', 'htd');
@@ -60,6 +60,4 @@ ob_clean();
 flush();
 $status = readfile($h2d_file_uri);
 unlink($h2d_file_uri);
-exit;  
-  
-?>
+exit;

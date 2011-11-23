@@ -1,7 +1,9 @@
 <?php
 
 // Example styles
-
+// This is an example of how a "style sheet" should be structured
+// to asign PHPWord styles to HTML elements, classes, and inline
+// styles.
 function h2d_styles() {
   
   // Set of default styles - 
@@ -50,7 +52,7 @@ function h2d_styles() {
       'sup' => array (
         'superScript' => TRUE,
         'size' => 6,
-        ), // Not working. 
+        ), // Superscript not working in PHPWord 
       'u' => array (
         'underline' => PHPWord_Style_Font::UNDERLINE_SINGLE,
         ),
@@ -99,17 +101,4 @@ function h2d_styles() {
     );
     
   return $styles;
-  
 }
-
-if (isset($style_list['float'])) {
-          switch($style_list['float']) {
-            case 'left':
-            case 'right':
-              $image_style['align'] = $style_list['float'];
-            break;
-            case 'middle':
-              $image_style['align'] = 'center';
-            break;
-          } 
-        }
