@@ -155,6 +155,13 @@ function h2d_get_style($element, $state) {
   
   $phpword_style = array_merge($phpword_style, $classes_style);
   
+  // TO DO:
+  // Need to rewrite this bit so that we can define some converters
+  // for size and colours. The idea would be able to have a style like:
+  // array('color: #{hex}' => array ('color' => '{hex}')); or
+  // array('border-width: {px}' => array ('borderSize' => '{twip}'));
+  // in the latter case, this would trigger a conversion from px to twips
+  
   // Find any inline styles:
   $inline_style_list = array();
   if (!empty($element->attr['style'])) {
@@ -180,7 +187,6 @@ function h2d_get_style($element, $state) {
   return $phpword_style;
   
 }
-
 
 /**
 * Populate PHPWord element

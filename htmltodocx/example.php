@@ -27,12 +27,12 @@ $html_dom_array = $html_dom->find('html',0)->children();
 // Provide some initial settings:
 $initial_state = array(
       'current_style' => array('size' => '11'),
-      'style_sheet' => h2d_styles(), // This is the "style sheet" in styles.inc
+      'style_sheet' => h2d_styles_example(), // This is an array (the "style sheet") - returned by h2d_styles_Example() here (in styles.inc) - see this function for an example of how to construct this array.
       'parents' => array(0 => 'body'), // Our parent is body
       'list_depth' => 0, // This is the current depth of any current list
       'context' => 'section', // Possible values - section, footer or header
-      'base_root' => 'http://test.local', // Required for link elements
-      'base_path' => '/', // Required for link elements
+      'base_root' => 'http://test.local', // Required for link elements - change it to your domain
+      'base_path' => '/', // Path from base_root to whatever url your links are relative to
       'pseudo_list' => TRUE, // NOTE: Word lists not yet supported (TRUE is the only option at present)
       'pseudo_list_indicator_font_name' => 'Wingdings', // Bullet indicator font
       'pseudo_list_indicator_font_size' => '7', // Bullet indicator size
