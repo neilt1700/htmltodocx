@@ -42,6 +42,10 @@ $initial_state = array(
 // Convert the HTML and put it into the PHPWord object
 h2d_insert_html($section, $html_dom_array[0]->nodes, $initial_state);
 
+// Clear the HTML dom object:
+$html_dom->clear(); 
+unset($html_dom);
+
 // Save File
 $h2d_file_uri = tempnam('', 'htd');
 $objWriter = PHPWord_IOFactory::createWriter($phpword_object, 'Word2007');
