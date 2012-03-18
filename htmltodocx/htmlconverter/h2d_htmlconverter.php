@@ -99,8 +99,9 @@ function h2d_clean_text($text) {
     // as strip_tags is expensive:
     $text = strip_tags($text);
   }
+    
   // Strip out extra spaces:
-  $text = preg_replace('/\s+/', ' ', $text);
+  $text = preg_replace('/\s+/u', ' ', $text);
   
   return $text;
 }
