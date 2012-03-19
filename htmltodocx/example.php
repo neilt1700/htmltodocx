@@ -37,6 +37,7 @@ $initial_state = array(
       'pseudo_list_indicator_font_name' => 'Wingdings', // Bullet indicator font
       'pseudo_list_indicator_font_size' => '7', // Bullet indicator size
       'pseudo_list_indicator_character' => 'l ', // Gives a circle bullet point with wingdings
+      'phpword_object' => &$phpword_object, // Must be passed by reference
       );    
 
 // Convert the HTML and put it into the PHPWord object

@@ -67,8 +67,9 @@ function h2d_html_allowed_children($tag = NULL) {
     'img' => array(),
     'table' => array('tbody', 'tr'),
     'tbody' => array('tr'),
-    'tr' => array('td'),
+    'tr' => array('td', 'th'),
     'td' => array('p', 'a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'br', 'span', 'u', 'sup', 'text', 'table'), // PHPWord does not allow you to insert a table into a table cell
+    'th' => array('p', 'a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'br', 'span', 'u', 'sup', 'text', 'table'), // PHPWord does not allow you to insert a table into a table cell
     'br' => array(),
     'span' => array('a', 'em', 'i', 'strong', 'b', 'img', 'br', 'span', 'sup', 'text'), // Used for styles - underline
     'text' => array(), // The tag name used for elements containing just text in SimpleHtmlDom.
@@ -251,12 +252,20 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
       case 'table':
         if (in_array('table', $allowed_children)) {
           $old_table_state = $state['table_allowed'];
-          if (in_array('td', $state['parents'])) {
+          if (in_array('td', $state['parents']) || in_array('th', $state['parents'])) {
             $state['table_allowed'] = FALSE; // This is a PHPWord constraint
           }
           else {
             $state['table_allowed'] = TRUE;
-            $state['table'] = $phpword_element->addTable();
+            // PHPWord allows table_styles to be passed in a couple of different ways either using an array of properties, or by defining a full table style on the PHPWord object:
+            if (is_object($state['phpword_object']) && method_exists($state['phpword_object']->addTableStyle)) {
+              $state['phpword_object']->addTableStyle('temp_table_style', $state['current_style']);
+              $table_style = 'temp_table_style';
+            }
+            else {
+              $table_style = $state['current_style'];
+            }
+            $state['table'] = $phpword_element->addTable($table_style); 
           }
           array_unshift($state['parents'], 'table');
           h2d_insert_html($phpword_element, $element->nodes, $state);
@@ -303,9 +312,10 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
       break;
 
       case 'td':
+      case 'th':
         // Unset any text run there may happen to be:
         // unset($state['textrun']);
-        if (in_array('td', $allowed_children) && $state['table_allowed']) {
+        if (in_array($element->tag, $allowed_children) && $state['table_allowed']) {
           unset($state['textrun']);
           if (isset($element->width)) {
             $cell_width = $element->width * 15; // Converting at 15 TWIPS per pixel
@@ -313,8 +323,8 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
           else {
             $cell_width = 800;
           }
-          $state['table_cell'] = $state['table']->addCell($cell_width);
-          array_unshift($state['parents'], 'td');
+          $state['table_cell'] = $state['table']->addCell($cell_width, $state['current_style']);
+          array_unshift($state['parents'], $element->tag);
           h2d_insert_html($state['table_cell'], $element->nodes, $state);
           array_shift($state['parents']); 
         }

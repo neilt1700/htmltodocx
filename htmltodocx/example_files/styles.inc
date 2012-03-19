@@ -60,6 +60,21 @@ function h2d_styles_example() {
         'color' => '0000FF',
         'underline' => PHPWord_Style_Font::UNDERLINE_SINGLE,
         ),
+      'table' => array (
+        // Note that applying a table style in PHPWord applies the relevant style to
+        // ALL the cells in the table. So, for example, the borderSize applied here
+        // applies to all the cells, and not just to the outer edges of the table:
+        'borderColor' => '000000',  
+        'borderSize' => 10,
+        ),
+      'th' => array (
+        'borderColor' => '000000',
+        'borderSize' => 10,
+        ),
+      'td' => array (
+        'borderColor' => '000000',
+        'borderSize' => 10,
+        ),
       );
       
   // Classes:
