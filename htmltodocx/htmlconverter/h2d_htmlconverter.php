@@ -126,14 +126,14 @@ function h2d_get_style($element, $state) {
   $style_sheet = $state['style_sheet'];
   
   // Get the default styles
-  $phpword_style = $style_sheet['default'] ? $style_sheet['default'] : array();
+  $phpword_style = isset($style_sheet['default']) ? $style_sheet['default'] : array();
   
   // Update with the current style
-  $current_style = $state['current_style'] ? $state['current_style'] : array();
+  $current_style = isset($state['current_style']) ? $state['current_style'] : array();
   $phpword_style = array_merge($phpword_style, $current_style);
   
   // Update with any styles defined by the element tag
-  $tag_style = $style_sheet['elements'][$element->tag] ? $style_sheet['elements'][$element->tag] : array();
+  $tag_style = isset($style_sheet['elements'][$element->tag]) ? $style_sheet['elements'][$element->tag] : array();
   $phpword_style = array_merge($phpword_style, $tag_style);
   
   // Find any classes defined for this element:
@@ -202,10 +202,10 @@ function h2d_get_style($element, $state) {
 function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) {
   
   // Set some defaults:
-  $state['current_style'] = $state['current_style'] ? $state['current_style'] : array('size' => '11');
-  $state['parents'] = $state['parents'] ? $state['parents'] : array(0 => 'body'); // Our parent is body
-  $state['list_depth'] = $state['list_depth'] ? $state['list_depth'] : 0;
-  $state['context'] = $state['context'] ? $state['context'] : 'section'; // Possible values - section, footer or header
+  $state['current_style'] = isset($state['current_style']) ? $state['current_style'] : array('size' => '11');
+  $state['parents'] = isset($state['parents']) ? $state['parents'] : array(0 => 'body'); // Our parent is body
+  $state['list_depth'] = isset($state['list_depth']) ? $state['list_depth'] : 0;
+  $state['context'] = isset($state['context']) ? $state['context'] : 'section'; // Possible values - section, footer or header
   
   
   // Go through the html_dom_array, adding bits to go in the PHPWord element
@@ -258,7 +258,7 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
           else {
             $state['table_allowed'] = TRUE;
             // PHPWord allows table_styles to be passed in a couple of different ways either using an array of properties, or by defining a full table style on the PHPWord object:
-            if (is_object($state['phpword_object']) && method_exists($state['phpword_object']->addTableStyle)) {
+            if (is_object($state['phpword_object']) && method_exists($state['phpword_object'], 'addTableStyle')) {
               $state['phpword_object']->addTableStyle('temp_table_style', $state['current_style']);
               $table_style = 'temp_table_style';
             }
@@ -338,7 +338,7 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
       
       case 'a':
         // Create a new text run if we aren't in one already:
-        if (!$state['textrun']) {
+        if (!isset($state['textrun'])) {
           $state['textrun'] = $phpword_element->createTextRun();
         }
         if ($state['context'] == 'section') {
@@ -366,7 +366,7 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
       
       case 'ul':
         if (in_array('ul', $allowed_children)) {
-          if (!$state['pseudo_list']) {
+          if (!isset($state['pseudo_list'])) {
             // Unset any existing text run:
             unset($state['textrun']); // PHPWord lists cannot appear in a text run. If we leave a text run active then subsequent text will go in that text run (if it isn't re-initialised), which would mean that text after this list would appear before it in the Word document.
           }
@@ -383,7 +383,7 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
       case 'ol':
         $state['list_number'] = 0; // Reset list number. 
         if (in_array('ol', $allowed_children)) {
-          if (!$state['pseudo_list']) {
+          if (!isset($state['pseudo_list'])) {
             // Unset any existing text run:
             unset($state['textrun']); // Lists cannot appear in a text run. If we leave a text run active then subsequent text will go in that text run (if it isn't re-initialised), which would mean that text after this list would appear before it in the Word document.
           }
@@ -435,14 +435,14 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
       // to exclude those, as these can cause extra line returns. However
       // we don't want to exclude spaces between styling elements (these will be within
       // a text run).
-        if (!$state['textrun']) {
+        if (!isset($state['textrun'])) {
           $text = h2d_clean_text(trim($element->innertext));
         }
         else {
           $text = h2d_clean_text($element->innertext);
         }
         if (!empty($text)) {
-          if (!$state['textrun']) {
+          if (!isset($state['textrun'])) {
             $state['textrun'] = $phpword_element->createTextRun();
           }
           $state['textrun']->addText($text, $state['current_style']);
@@ -459,7 +459,7 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
       case 'span':
         
         // Create a new text run if we aren't in one already:
-        if (!$state['textrun']) {
+        if (!isset($state['textrun'])) {
           $state['textrun'] = $phpword_element->createTextRun();
         }
         if (in_array($element->tag, $allowed_children)) {
