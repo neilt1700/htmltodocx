@@ -34,6 +34,14 @@ function h2d_styles_example() {
         'bold' => TRUE,
         'spaceAfter' => 100,
         ),
+      'li' => array (
+        ),
+      'ol' => array (
+        'spaceBefore' => 200,
+        ),
+      'ul' => array (
+        'spaceAfter' => 150,
+        ),
       'b' => array (
         'bold' => TRUE,
         ),
