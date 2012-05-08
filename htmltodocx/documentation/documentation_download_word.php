@@ -4,13 +4,16 @@
 */
 
 // Load the files we need:
-require_once 'phpword/PHPWord.php';
-require_once 'simplehtmldom/simple_html_dom.php';
-require_once 'htmlconverter/h2d_htmlconverter.php';
-require_once 'example_files/styles.inc';
+require_once '../phpword/PHPWord.php';
+require_once '../simplehtmldom/simple_html_dom.php';
+require_once '../htmlconverter/h2d_htmlconverter.php';
+require_once 'docs_styles.inc';
 
 // HTML fragment we want to parse:
-$html = file_get_contents('example_files/example_html.html');
+ob_start(); //start output buffering
+require_once ('documentation.html.php'); //all output goes to buffer
+$html = ob_get_contents(); //assign buffer to a variable
+ob_end_clean();
  
 // New Word Document:
 $phpword_object = new PHPWord();
@@ -29,7 +32,7 @@ $initial_state = array(
   // Required parameters:
   'phpword_object' => &$phpword_object, // Must be passed by reference.
   'base_root' => 'http://test.local', // Required for link elements - change it to your domain.
-  'base_path' => '/htmltodocx/', // Path from base_root to whatever url your links are relative to.
+  'base_path' => '/htmltodocx/documentation/', // Path from base_root to whatever url your links are relative to.
   
   // Optional parameters - showing the defaults if you don't set anything:
   'current_style' => array('size' => '11'), // The PHPWord style on the top element - may be inherited by descendent elements.
@@ -41,10 +44,12 @@ $initial_state = array(
   'pseudo_list_indicator_font_size' => '7', // Bullet indicator size.
   'pseudo_list_indicator_character' => 'l ', // Gives a circle bullet point with wingdings.
   'table_allowed' => TRUE, // Note, if you are adding this html into a PHPWord table you should set this to FALSE: tables cannot be nested in PHPWord.
-      
+  'structure_document' => TRUE, // h1..h6 titles will be Heading 1... Heading 6 styles in the Word document. Note that in this case child elements will be parsed as text only.
+  
   // Optional - no default:    
-  'style_sheet' => h2d_styles_example(), // This is an array (the "style sheet") - returned by h2d_styles_example() here (in styles.inc) - see this function for an example of how to construct this array.
-  );    
+  'style_sheet' => h2d_docs_style(), // This is an array (the "style sheet") - returned by h2d_styles_example() here (in styles.inc) - see this function for an example of how to construct this array.
+  'table_of_contents_id' => 'word-table-of-contents', // If structure_document is TRUE, and this is defined, then any div element with this id will have its contents replaced with the Word table of contents when the Word document is created.
+  );
 
 // Convert the HTML and put it into the PHPWord object
 h2d_insert_html($section, $html_dom_array[0]->nodes, $initial_state);

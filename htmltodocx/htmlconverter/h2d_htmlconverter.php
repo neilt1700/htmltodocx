@@ -46,32 +46,33 @@ function h2d_html_allowed_children($tag = NULL) {
 
   $allowed_children = array(
     'body' => array('p', 'ul', 'ol', 'table', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
-    'h1' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'u', 'sup', 'text'),
-    'h2' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'u', 'sup', 'text'),
-    'h3' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'u', 'sup', 'text'),
-    'h4' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'u', 'sup', 'text'),
-    'h5' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'u', 'sup', 'text'),
-    'h6' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'u', 'sup', 'text'),
-    'p' => array('a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'table', 'br', 'span', 'u', 'sup', 'text', 'div', 'p'), // p does not nest - simple_html_dom will create a flat set of paragraphs if it finds nested ones.
-    'div' => array('a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'table', 'br', 'span', 'u', 'sup', 'text', 'div', 'p'),
+    'h1' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'code', 'u', 'sup', 'text'),
+    'h2' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'code', 'u', 'sup', 'text'),
+    'h3' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'code', 'u', 'sup', 'text'),
+    'h4' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'code', 'u', 'sup', 'text'),
+    'h5' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'code', 'u', 'sup', 'text'),
+    'h6' => array('a', 'em', 'i', 'strong', 'b', 'br', 'span', 'code', 'u', 'sup', 'text'),
+    'p' => array('a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'table', 'br', 'span', 'code', 'u', 'sup', 'text', 'div', 'p'), // p does not nest - simple_html_dom will create a flat set of paragraphs if it finds nested ones.
+    'div' => array('a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'table', 'br', 'span', 'code', 'u', 'sup', 'text', 'div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
     'a' => array('text'), // PHPWord doesn't allow elements to be placed in link elements
-    'em' => array('a', 'strong', 'b', 'br', 'span', 'u', 'sup', 'text'), // Italic
-    'i' => array('a', 'strong', 'b', 'br', 'span', 'u', 'sup', 'text'), // Italic
-    'strong' => array('a', 'em', 'i', 'br', 'span', 'u', 'sup', 'text'), // Bold
-    'b' => array('a', 'em', 'i', 'br', 'span', 'u', 'sup', 'text'), // Bold
-    'sup' => array('a', 'em', 'i', 'br', 'span', 'u', 'text'), // Superscript
-    'u' => array('a', 'em', 'strong', 'b', 'i', 'br', 'span', 'sup', 'text'), // Underline - deprecated - but could be encountered.
+    'em' => array('a', 'strong', 'b', 'br', 'span', 'code', 'u', 'sup', 'text'), // Italic
+    'i' => array('a', 'strong', 'b', 'br', 'span', 'code', 'u', 'sup', 'text'), // Italic
+    'strong' => array('a', 'em', 'i', 'br', 'span', 'code', 'u', 'sup', 'text'), // Bold
+    'b' => array('a', 'em', 'i', 'br', 'span', 'code', 'u', 'sup', 'text'), // Bold
+    'sup' => array('a', 'em', 'i', 'br', 'span', 'code', 'u', 'text'), // Superscript
+    'u' => array('a', 'em', 'strong', 'b', 'i', 'br', 'span', 'code', 'sup', 'text'), // Underline - deprecated - but could be encountered.
     'ul' => array('li'),
     'ol' => array('li'),
-    'li' => array('a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'br', 'span', 'u', 'sup', 'text'),
+    'li' => array('a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'br', 'span', 'code', 'u', 'sup', 'text'),
     'img' => array(),
     'table' => array('tbody', 'tr'),
     'tbody' => array('tr'),
     'tr' => array('td', 'th'),
-    'td' => array('p', 'a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'br', 'span', 'u', 'sup', 'text', 'table'), // PHPWord does not allow you to insert a table into a table cell
-    'th' => array('p', 'a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'br', 'span', 'u', 'sup', 'text', 'table'), // PHPWord does not allow you to insert a table into a table cell
+    'td' => array('p', 'a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'br', 'span', 'code', 'u', 'sup', 'text', 'table'), // PHPWord does not allow you to insert a table into a table cell
+    'th' => array('p', 'a', 'em', 'i', 'strong', 'b', 'ul', 'ol', 'img', 'br', 'span', 'code', 'u', 'sup', 'text', 'table'), // PHPWord does not allow you to insert a table into a table cell
     'br' => array(),
-    'span' => array('a', 'em', 'i', 'strong', 'b', 'img', 'br', 'span', 'sup', 'text'), // Used for styles - underline
+    'code' => array(), // Note, elements nested inside the code element do not work! (Perhaps simpleHTMLDom isn't recognising them).
+    'span' => array('a', 'em', 'i', 'strong', 'b', 'img', 'br', 'span', 'code', 'sup', 'text'), // Used for styles - underline
     'text' => array(), // The tag name used for elements containing just text in SimpleHtmlDom.
   );
   
@@ -104,8 +105,11 @@ function h2d_clean_text($text) {
   // Strip out extra spaces:
   $text = preg_replace('/\s+/u', ' ', $text);
   
+  // Convert entities:
+  $text = html_entity_decode($text, ENT_COMPAT, 'UTF-8');
   return $text;
 }
+  
 
 /**
 * Compute the styles that should be applied for the 
@@ -210,7 +214,7 @@ function h2d_inheritable_props() {
     'superScript',
     'subScript',
     'underline',
-    'Color',
+    'color',
     'fgColor',
     'align',
     'spacing',
@@ -258,6 +262,16 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
     $state['table_allowed'] = TRUE;
   }
   
+  // Headings option:
+  $state['structure_document'] = isset($state['structure_document']) ? $state['structure_document'] : FALSE;
+  
+  if ($state['structure_document']) {
+    $state['structure_headings'] = array('h1' => 1, 'h2' => 2, 'h3' => 3, 'h4' => 4, 'h5' => 5, 'h6' => 6);
+  }
+  if (!$state['structure_document'] || !isset($state['table_of_contents_id'])) {
+    $state['table_of_contents_id'] = FALSE;
+  }
+  
   // Recurse through the HTML Dom inserting elements into the phpword object as we go:
   h2d_insert_html_recursive($phpword_element, $html_dom_array, $state);
   
@@ -295,6 +309,23 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
       case 'h4':
       case 'h5':
       case 'h6':
+      
+        if ($state['structure_document'] && in_array($element->tag, array('h1', 'h2', 'h3', 'h4', 'h5', 'h6'))) {
+          // If the structure_document option has been enabled, 
+          // then headings are used to create Word heading styles. Note, in this case, any
+          // nested elements within the heading are displayed as text only. Additionally we don't
+          // now add a text break after a heading where sizeAfter has not been set.
+          $state['phpword_object']->addTitleStyle($state['structure_headings'][$element->tag], $state['current_style']);
+          $phpword_element->addTitle(h2d_clean_text($element->innertext), $state['structure_headings'][$element->tag]);
+          break;
+        }
+        
+        if ($element->tag == 'div' && $state['table_of_contents_id'] && $element->id == $state['table_of_contents_id']) {
+          // Replace this div with a table of contents:
+          $phpword_element->addTOC($state['current_style'], $state['current_style']);
+          break;
+        }
+      
         // Everything in this element should be in the same text run
         // we need to initiate a text run here and pass it on:
         $state['textrun'] = $phpword_element->createTextRun($state['current_style']);
@@ -332,7 +363,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
           unset($state['current_style']['spaceAfter']);
         }
       break;
-      
+
       case 'table':
         if (in_array('table', $allowed_children)) {
           $old_table_state = $state['table_allowed'];
@@ -401,7 +432,10 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
         // unset($state['textrun']);
         if (in_array($element->tag, $allowed_children) && $state['table_allowed']) {
           unset($state['textrun']);
-          if (isset($element->width)) {
+          if (isset($state['current_style']['width'])) {
+            $cell_width = $state['current_style']['width'];
+          }
+          elseif (isset($element->width)) {
             $cell_width = $element->width * 15; // Converting at 15 TWIPS per pixel
           }
           else {
@@ -539,6 +573,9 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
       // to exclude those, as these can cause extra line returns. However
       // we don't want to exclude spaces between styling elements (these will be within
       // a text run).
+      
+      // SimpleHTMLDOm does not appear to catch the <br> elements...
+      
         if (!isset($state['textrun'])) {
           $text = h2d_clean_text(trim($element->innertext));
         }
@@ -561,6 +598,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
       case 'i':
       case 'u':      
       case 'span':
+      case 'code':
         
         // Create a new text run if we aren't in one already:
         if (!isset($state['textrun'])) {
@@ -587,7 +625,29 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
          $state['current_style']['height'] = $element->height;
          $state['current_style']['width'] = $element->width; 
         }
-        $phpword_element->addImage(ltrim($element->src, '/'), $state['current_style']);
+        
+        if (strpos($element->src, $state['base_root']) === 0) {
+          // The image source is a full url, but nevertheless it is on this server.
+          $element_src = substr($element->src, strlen($state['base_root']));
+        }
+        else {
+          $element_src = $element->src;
+        }
+        
+        if (strpos($element_src, 'http://') === 0) {
+          // The image url is from another site. Most probably the image won't appear
+          // in the Word document.
+          $src = $element_src;
+        }
+        elseif (strpos($element_src, '/') === 0) {
+          $src = h2d_doc_root() . $element_src;
+        }
+        else {
+          $src = h2d_doc_root() . $state['base_path'] . $element_src; 
+        }
+        
+        $phpword_element->addImage($src, $state['current_style']);
+
       break;
 
       default:
@@ -615,6 +675,18 @@ function h2d_add_list_start_end_spacing_style(&$state) {
   
 }
 
+/**
+* Get the document root
+* 
+*/
+function h2d_doc_root() {
+   
+  $local_path = getenv("SCRIPT_NAME"); // Should be available on both Apache and non Apache servers
+  $local_dir = substr($local_path, 0, strrpos($local_path, '/'));
+  
+  return substr(realpath(''), 0, -1 * strlen($local_dir));
+ 
+}
 
 // Processing inline styles:
 
