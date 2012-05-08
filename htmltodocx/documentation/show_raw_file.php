@@ -13,7 +13,7 @@
 
 $showable_files = array(
   'example.php' => '../example.php',
-  'styles.inc' => 'styles.inc',
+  'docs_styles.inc' => 'docs_styles.inc',
   'example_files/styles.inc' => '../example_files/styles.inc',
 );
 

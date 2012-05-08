@@ -44,3 +44,13 @@ th {
 td.heading {
   font-weight: bold;
 }
+
+img.medium-image-size {
+  width: 150px;
+  height: 150px;
+}
+
+img.small-image-size {
+  width: 80px;
+  height: 80px;
+}

@@ -20,16 +20,16 @@ Placeholder for table of contents.
 
 <h2>Setting up</h2>
 
-<p>See <a href="show_raw_file.php?file=example.php">example.php</a> for an example of how to use this converter. Note you do not need to include the documentation directory on your live production server.</p>
+<p>See <a href="show_raw_file.php?file=example.php">example.php</a> for an example of how to use this converter. <a href="../example.php">Download the Word document created by this example</a>. Note you do not need to include the documentation directory on your live production server.</p>
 
 
 <h2>Creating a "style sheet"</h2>
 
-<p>This converter uses a style sheet in the form of a php array which allows you to assign <a href="http://phpword.codeplex.com/">PHPWord</a> styles to HTML elements, classes and inline styles. <a href="show_raw_file.php?file=example_files/styles.inc">This is an example style sheet used to create the Word document at example.php</a>, and <a href="show_raw_file.php?file=styles.inc">this is the style sheet used to convert this page to a Word document</a>.</p>
+<p>This converter uses a style sheet in the form of a php array which allows you to assign <a href="http://phpword.codeplex.com/">PHPWord</a> styles to HTML elements, classes and inline styles. <a href="show_raw_file.php?file=example_files/styles.inc">This is an example style sheet used to create the Word document at example.php</a>, and <a href="show_raw_file.php?file=docs_styles.inc">this is the style sheet used to convert this page to a Word document</a>.</p>
 
 <p>Note that all the attribute-values in these arrays are <a href="http://phpword.codeplex.com/">PHPWord</a> attribute-values - you should refer to the PHPWord documentation for more information on these - see: PHPWord_Docs_0.6.2.docx in the phpword directory.</p>
 
-<p>All measurements should be in TWIPs (as described in the PHPWord documentation). You can add a width in pixels directly onto an HTML cell tag, e.g.: &lt;td width=200> and this will be converted into TWIPs automatically - converting at 15TWIPs per pixel.</p>
+<p>Measurements are generally in TWIPs (as described in the PHPWord documentation). You can add a width in pixels directly onto an HTML cell tag, e.g.: &lt;td width=200> and this will be converted into TWIPs automatically - converting at 15TWIPs per pixel. Image widths and heights are specified in pixels for PHPWord.</p>
 
 <h2>Elements</h2>
 
@@ -81,4 +81,12 @@ Placeholder for table of contents.
 
 <h2>Tables</h2>
 
-<p>Line 236, Document.php in PHPWord, changed to public function so that lists can be used in a table cell. Note that in any case lists are not currently enabled in htmltodocx converter and "pseudo lists" are used instead - which can have styling applied within each list element.</p> 
+<p>Note that tables cannot be nested in PHPWord. Nested tables will be displayed as text.</p>
+
+<p>Line 236, Document.php in PHPWord, changed to public function so that lists can be used in a table cell. Note that in any case lists are not currently enabled in htmltodocx converter and "pseudo lists" are used instead - which can have styling applied within each list element.</p>
+
+<h2>Images</h2>
+
+<p>You can align images left, middle, or right, but you don't appear to be able to butt them together on one line with PHPWord - they will appear on different lines. A way around this could be to insert them into cells in a table.</p>
+
+<img class="small-image-size" style="float: left" src="cat.jpg"><img class="small-image-size" style="float: none;" src="dog.jpg"><img class="small-image-size" style="float: right" src="rabbit.jpg">

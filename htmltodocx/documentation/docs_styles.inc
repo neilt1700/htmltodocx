@@ -125,7 +125,15 @@ function h2d_docs_style() {
       ),
       'table-of-contents' => array (
         'tabLeader' => 'underscore',
-      )
+      ),
+      'medium-image-size' => array (
+        'width' => 150,
+        'height' => 150,
+      ),
+      'small-image-size' => array (
+        'width' => 80,
+        'height' => 80,
+      ),
     );
   
   // Inline style definitions, of the form:
@@ -136,13 +144,13 @@ function h2d_docs_style() {
       'text-decoration: underline' => array (
         'underline' => PHPWord_Style_Font::UNDERLINE_SINGLE,
       ),
-      'vertical-align: left' => array (
+      'float: left' => array (
         'align' => 'left',
       ),
-      'vertical-align: middle' => array (
+      'float: none' => array (
         'align' => 'center',
       ),
-      'vertical-align: right' => array (
+      'float: right' => array (
         'align' => 'right',
       ),
     );
