@@ -66,7 +66,7 @@ $objWriter->save($h2d_file_uri);
 // Download the file:
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
-header('Content-Disposition: attachment; filename=example.docx');
+header('Content-Disposition: attachment; filename=htmltodocx-documentation.docx');
 header('Content-Transfer-Encoding: binary');
 header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');

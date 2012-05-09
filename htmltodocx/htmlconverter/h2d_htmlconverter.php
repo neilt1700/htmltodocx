@@ -470,8 +470,8 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
           else {
             $href = $state['base_root'] . $state['base_path'] . $element->href; 
           }
-          
-          $state['textrun']->addLink($href, h2d_clean_text($element->innertext), $state['current_style']);
+          // Replace any spaces in url with %20 - to prevent errors in the Word document:
+          $state['textrun']->addLink(h2d_url_encode_chars($href), h2d_clean_text($element->innertext), $state['current_style']);
         }
         else {
           // Links can't seem to be included in headers or footers with PHPWord:
@@ -684,9 +684,43 @@ function h2d_doc_root() {
   $local_path = getenv("SCRIPT_NAME"); // Should be available on both Apache and non Apache servers
   $local_dir = substr($local_path, 0, strrpos($local_path, '/'));
   
-  return substr(realpath(''), 0, -1 * strlen($local_dir));
- 
+  if (empty($local_dir)) {
+    return realpath('');
+  }
+  else {
+    return substr(realpath(''), 0, -1 * strlen($local_dir));
+  }
 }
+
+/**
+* Encodes selected characters in a url to prevent errors in
+* the created Word document.
+* Note: if there is a space in the url and there isn't a forward slash
+* preceding it at some point, the resulting Word document will be corrupted (even
+* where the space has been urlencoded).
+* We convert spaces to %20 which stops this corruption in circumstances where a
+* forward slash is present.
+* 
+* @param mixed $url
+* @return mixed
+*/
+function h2d_url_encode_chars($url) {
+  
+  // List the characters in this array to be encoded:
+  $encode_chars = array(' ');
+  
+  foreach ($encode_chars as $char) {
+    $encoded_chars[] = rawurlencode($char);
+  }
+  
+  $encoded_url = str_replace($encode_chars, $encoded_chars, $url);
+  
+  return $encoded_url;
+}
+
+
+// IN DEVELOPMENT: //
+//===================
 
 // Processing inline styles:
 
@@ -701,10 +735,6 @@ function h2d_doc_root() {
 NB, there are no "shorthand" styles in PHPWord - all one to one attribute-values
 
 Allow custom overriding of the values converter
-
-
-
-
 
 '#multi' for 1 to 4 way order dependent settings
 you should provide all four values however.
@@ -795,15 +825,8 @@ function h2d_inline_styles() {
         ),
       ),
     ),
-    
-    
-    
-    
-    
+  
   ); 
-  
-  
-  
   
 }
 
