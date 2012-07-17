@@ -310,7 +310,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
       case 'h5':
       case 'h6':
       
-        if ($state['structure_document'] && in_array($element->tag, array('h1', 'h2', 'h3', 'h4', 'h5', 'h6'))) {
+        if ($state['structure_document'] && in_array($element->tag, array('h1', 'h2', 'h3', 'h4', 'h5', 'h6')) && is_object($state['phpword_object'])) {
           // If the structure_document option has been enabled, 
           // then headings are used to create Word heading styles. Note, in this case, any
           // nested elements within the heading are displayed as text only. Additionally we don't

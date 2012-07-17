@@ -1,8 +1,8 @@
 Adding HTML to Word Documents using PHPWord and SimpleHTMLDom
 ==============================================================
 
-version 0.5.2 alpha (dev)
-=========================
+version 0.5.2 alpha
+============
 
 These functions enable you to add HTML into a Word document using PHPWord.
 
@@ -11,13 +11,25 @@ The purpose of this software is to add HTML to Word documents in a form that is 
 Changes
 =======
 
+Revision: 11275
+Author: SND\neilt17_cp
+Date: 09 May 2012 15:37:52
+* Added url encoding of spaces in urls - which can cause the Word document to be corrupt. Note, even with this, any space in a url where there isn't a '/' at some point before it will corrupt the Word document;
+* Corrected bug in image source path creation for situations where the base path is empty.
+
+Revision: 11257
+Author: SND\neilt17_cp
+Date: 08 May 2012 23:02:19
+Update to documentation files.
+
 Revision: 11250
 Author: SND\neilt17_cp
 Date: 08 May 2012 19:08:43
 * Added support for HTML entities;
 * Added support for cell widths styles (can be defined as a style as well as a width on the HTML td element);
 * Added table of contents support: you can enable headings (h1..h6) to be converted to Word headings (heading 1..heading 6), and assign an id to a div element which will be replaced with a Word table of contents on conversion;
-* New documentation at documentation/index.php (browse to it on your test server).
+* New documentation at documentation/index.php (browse to it on your test server);
+* Improved handling of image src - see: h2d_htmlconverter.php - lines 629 to 647 (work item 442).
 
 Revision: 11242
 Author: SND\neilt17_cp
