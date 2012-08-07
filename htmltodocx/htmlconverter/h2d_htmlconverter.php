@@ -112,7 +112,6 @@ function h2d_clean_text($text) {
   $text = html_entity_decode($text, ENT_COMPAT, 'UTF-8');
   return $text;
 }
-  
 
 /**
  * Compute the styles that should be applied for the 
@@ -217,7 +216,7 @@ function h2d_inheritable_props() {
 
 /**
  * Wrapper for h2d_insert_html_recursive()
- * Inserts the initial defaults
+ * - inserts the initial defaults.
  * 
  * @param $phpword_element
  *   PHPWord object
@@ -745,5 +744,3 @@ function h2d_url_encode_chars($url) {
   
   return $encoded_url;
 }
-
-
