@@ -269,6 +269,11 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
     $state['table_of_contents_id'] = FALSE;
   }
   
+  // Treatment of divs:
+  // The default is to treat a div like a paragraph - that is we insert a new
+  // line each time we encounter a new div.
+  $state['treat_div_as_paragraph'] = isset($state['treat_div_as_paragraph']) ? $state['treat_div_as_paragraph'] : TRUE;
+  
   // Recurse through the HTML Dom inserting elements into the phpword object as
   // we go:
   h2d_insert_html_recursive($phpword_element, $html_dom_array, $state);
@@ -327,8 +332,14 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
         }
       
         // Everything in this element should be in the same text run
-        // we need to initiate a text run here and pass it on:
-        $state['textrun'] = $phpword_element->createTextRun($state['current_style']);
+        // we need to initiate a text run here and pass it on. Starting one of
+        // these elements will cause a new line to be added in the Word
+        // document. In the case of divs this might not always be what is
+        // wanted the setting 'treat_div_as_paragraph' determines whether or
+        // not to add new lines for divs.
+        if ($element->tag != 'div' || $state['treat_div_as_paragraph'] || !isset($state['textrun'])) {
+          $state['textrun'] = $phpword_element->createTextRun($state['current_style']);
+        }
         
         // For better usability for the end user of the Word document, we 
         // separate paragraphs and headings with an empty line. You can 

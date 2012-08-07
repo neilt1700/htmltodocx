@@ -41,6 +41,7 @@ $initial_state = array(
   'pseudo_list_indicator_font_size' => '7', // Bullet indicator size.
   'pseudo_list_indicator_character' => 'l ', // Gives a circle bullet point with wingdings.
   'table_allowed' => TRUE, // Note, if you are adding this html into a PHPWord table you should set this to FALSE: tables cannot be nested in PHPWord.
+  'treat_div_as_paragraph' => TRUE, // If set to TRUE, each new div will trigger a new line in the Word document.
       
   // Optional - no default:    
   'style_sheet' => h2d_styles_example(), // This is an array (the "style sheet") - returned by h2d_styles_example() here (in styles.inc) - see this function for an example of how to construct this array.
