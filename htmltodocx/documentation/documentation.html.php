@@ -27,7 +27,7 @@ Placeholder for table of contents.
 
 <p>This converter uses a style sheet in the form of a php array which allows you to assign <a href="http://phpword.codeplex.com/">PHPWord</a> styles to HTML elements, classes and inline styles. <a href="show_raw_file.php?file=example_files/styles.inc">This is an example style sheet used to create the Word document at example.php</a>, and <a href="show_raw_file.php?file=docs_styles.inc">this is the style sheet used to convert this page to a Word document</a>.</p>
 
-<p>Note that all the attribute-values in these arrays are <a href="http://phpword.codeplex.com/">PHPWord</a> attribute-values - you should refer to the PHPWord documentation for more information on these - see: PHPWord_Docs_0.6.2.docx in the phpword directory.</p>
+<p>Note that all the attribute-values in these arrays are <a href="http://phpword.codeplex.com/">PHPWord</a> attribute-values - you should refer to the PHPWord documentation for more information on these - see: <a href="../phpword/PHPWord_Docs_0.6.2.docx">PHPWord_Docs_0.6.2.docx</a> in the phpword directory.</p>
 
 <p>Measurements are generally in TWIPs (as described in the PHPWord documentation). You can add a width in pixels directly onto an HTML cell tag, e.g.: &lt;td width=200> and this will be converted into TWIPs automatically - converting at 15TWIPs per pixel. Image widths and heights are specified in pixels for PHPWord.</p>
 
