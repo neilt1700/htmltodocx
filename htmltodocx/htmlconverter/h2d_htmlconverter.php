@@ -44,7 +44,7 @@
  * @return
  *   array of allowed children
  */
-function h2d_html_allowed_children($tag = NULL) {
+function htmltodocx_html_allowed_children($tag = NULL) {
 
   $allowed_children = array(
     'body' => array('p', 'ul', 'ol', 'table', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
@@ -95,7 +95,7 @@ function h2d_html_allowed_children($tag = NULL) {
  * @param string $text
  * 
  */
-function h2d_clean_text($text) {
+function htmltodocx_clean_text($text) {
   
   // Replace each &nbsp; with a single space:
   $text = str_replace('&nbsp;', ' ', $text);
@@ -121,7 +121,7 @@ function h2d_clean_text($text) {
  * and inline styles.
  * 
  */
-function _h2d_get_style($element, $state) {
+function _htmltodocx_get_style($element, $state) {
 
   $style_sheet = $state['style_sheet'];
   
@@ -132,7 +132,7 @@ function _h2d_get_style($element, $state) {
   $current_style = $state['current_style'];
   
   // Remove uninheritable items:
-  $inheritable_props = h2d_inheritable_props();
+  $inheritable_props = htmltodocx_inheritable_props();
   foreach ($current_style as $property => $value) {
     if (!in_array($property, $inheritable_props)) {
       unset($current_style[$property]); 
@@ -196,7 +196,7 @@ function _h2d_get_style($element, $state) {
  * conversion:
  * 
  */
-function h2d_inheritable_props() {
+function htmltodocx_inheritable_props() {
   return array(
     'size',
     'name',
@@ -215,7 +215,7 @@ function h2d_inheritable_props() {
 
 
 /**
- * Wrapper for h2d_insert_html_recursive()
+ * Wrapper for htmltodocx_insert_html_recursive()
  * - inserts the initial defaults.
  * 
  * @param $phpword_element
@@ -225,7 +225,7 @@ function h2d_inheritable_props() {
  * @param mixed $state
  *   State
  */
-function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) {
+function htmltodocx_insert_html(&$phpword_element, $html_dom_array, &$state = array()) {
   
   // Set up initial defaults:
   
@@ -275,7 +275,7 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
   
   // Recurse through the HTML Dom inserting elements into the phpword object as
   // we go:
-  h2d_insert_html_recursive($phpword_element, $html_dom_array, $state);
+  htmltodocx_insert_html_recursive($phpword_element, $html_dom_array, $state);
 }
 
 /**
@@ -290,17 +290,17 @@ function h2d_insert_html(&$phpword_element, $html_dom_array, &$state = array()) 
  * @param array $state
  *   Parameters for the current run
  */
-function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state = array()) {
+function htmltodocx_insert_html_recursive(&$phpword_element, $html_dom_array, &$state = array()) {
    
   // Go through the html_dom_array, adding bits to go in the PHPWord element
-  $allowed_children = h2d_html_allowed_children($state['parents'][0]);
+  $allowed_children = htmltodocx_html_allowed_children($state['parents'][0]);
  
   // Go through each element:
   foreach ($html_dom_array as $element) {
 
     $old_style = $state['current_style'];
     
-    $state['current_style'] = _h2d_get_style($element, $state);
+    $state['current_style'] = _htmltodocx_get_style($element, $state);
     
     switch ($element->tag) {
       
@@ -320,7 +320,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
           // Additionally we don't now add a text break after a heading where
           // sizeAfter has not been set.
           $state['phpword_object']->addTitleStyle($state['structure_headings'][$element->tag], $state['current_style']);
-          $phpword_element->addTitle(h2d_clean_text($element->innertext), $state['structure_headings'][$element->tag]);
+          $phpword_element->addTitle(htmltodocx_clean_text($element->innertext), $state['structure_headings'][$element->tag]);
           break;
         }
         
@@ -359,11 +359,11 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
         
         if (in_array($element->tag, $allowed_children)) {
           array_unshift($state['parents'], $element->tag);
-          h2d_insert_html_recursive($phpword_element, $element->nodes, $state);
+          htmltodocx_insert_html_recursive($phpword_element, $element->nodes, $state);
           array_shift($state['parents']);
         }
         else {
-          $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
         }
         unset($state['textrun']);
         if (!$space_after_set) {
@@ -396,7 +396,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
             $state['table'] = $phpword_element->addTable($table_style); 
           }
           array_unshift($state['parents'], 'table');
-          h2d_insert_html_recursive($phpword_element, $element->nodes, $state);
+          htmltodocx_insert_html_recursive($phpword_element, $element->nodes, $state);
           array_shift($state['parents']);
           // Reset table state to what it was before a table was added:
           $state['table_allowed'] = $old_table_state; 
@@ -404,19 +404,19 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
         }
         else {
           $state['textrun'] = $phpword_element->createTextRun();
-          $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
         }     
       break;
       
       case 'tbody':
         if (in_array('tbody', $allowed_children)) {
           array_unshift($state['parents'], 'tbody');
-          h2d_insert_html_recursive($phpword_element, $element->nodes, $state);
+          htmltodocx_insert_html_recursive($phpword_element, $element->nodes, $state);
           array_shift($state['parents']); 
         }
         else {
           $state['textrun'] = $phpword_element->createTextRun();
-          $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
         }
       break;
       
@@ -431,12 +431,12 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
             $state['textrun'] = $phpword_element->createTextRun();
           }
           array_unshift($state['parents'], 'tr');
-          h2d_insert_html_recursive($phpword_element, $element->nodes, $state);
+          htmltodocx_insert_html_recursive($phpword_element, $element->nodes, $state);
           array_shift($state['parents']); 
         }
         else {
           $state['textrun'] = $phpword_element->createTextRun();
-          $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
         }     
       break;
 
@@ -456,14 +456,14 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
           }
           $state['table_cell'] = $state['table']->addCell($cell_width, $state['current_style']);
           array_unshift($state['parents'], $element->tag);
-          h2d_insert_html_recursive($state['table_cell'], $element->nodes, $state);
+          htmltodocx_insert_html_recursive($state['table_cell'], $element->nodes, $state);
           array_shift($state['parents']); 
         }
         else {
           if (!isset($state['textrun'])) {
             $state['textrun'] = $phpword_element->createTextRun();
           }
-          $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
         }
       break;
       
@@ -485,14 +485,14 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
           }
           // Replace any spaces in url with %20 - to prevent errors in the Word
           // document:
-          $state['textrun']->addLink(h2d_url_encode_chars($href), h2d_clean_text($element->innertext), $state['current_style']);
+          $state['textrun']->addLink(htmltodocx_url_encode_chars($href), htmltodocx_clean_text($element->innertext), $state['current_style']);
         }
         else {
           // Links can't seem to be included in headers or footers with
           // PHPWord: trying to include them causes an error which stops Word
           // from opening the file - in Word 2003 with the converter at least.
           // So add the link styled as a link only.
-          $state['textrun']->addText(h2d_clean_text($element->innertext), $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext), $state['current_style']);
         }
       break;
       
@@ -500,7 +500,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
         $state['list_total_count'] = count($element->children);
         // We use this to be able to add the ordered list spaceAfter onto the
         // last list element. All ol children should be li elements.
-        _h2d_add_list_start_end_spacing_style($state);
+        _htmltodocx_add_list_start_end_spacing_style($state);
         $state['list_number'] = 0; // Reset list number.
         if (in_array('ul', $allowed_children)) {
           if (!isset($state['pseudo_list'])) {
@@ -512,12 +512,12 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
             // list would appear before it in the Word document.
           }
           array_unshift($state['parents'], 'ul');
-          h2d_insert_html_recursive($phpword_element, $element->nodes, $state);
+          htmltodocx_insert_html_recursive($phpword_element, $element->nodes, $state);
           array_shift($state['parents']);
         }
         else {
           $state['textrun'] = $phpword_element->createTextRun();
-          $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
         }
       break;
       
@@ -525,7 +525,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
         $state['list_total_count'] = count($element->children); 
         // We use this to be able to add the ordered list spaceAfter onto the
         // last list element. All ol children should be li elements.
-        _h2d_add_list_start_end_spacing_style($state);
+        _htmltodocx_add_list_start_end_spacing_style($state);
         $state['list_number'] = 0; // Reset list number. 
         if (in_array('ol', $allowed_children)) {
           if (!isset($state['pseudo_list'])) {
@@ -537,12 +537,12 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
             // would appear before it in the Word document.
           }
           array_unshift($state['parents'], 'ol');
-          h2d_insert_html_recursive($phpword_element, $element->nodes, $state);
+          htmltodocx_insert_html_recursive($phpword_element, $element->nodes, $state);
           array_shift($state['parents']);
         }
         else {
           $state['textrun'] = $phpword_element->createTextRun();
-          $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
         }
       break;
       
@@ -584,11 +584,11 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
           }
           array_unshift($state['parents'], 'li');
           $state['textrun']->addText($item_indicator, $style);
-          h2d_insert_html_recursive($phpword_element, $element->nodes, $state);
+          htmltodocx_insert_html_recursive($phpword_element, $element->nodes, $state);
           array_shift($state['parents']);          
         }
         else {
-          $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
         }
         if ($last_item && empty($state['list_style_after'])) {
           $phpword_element->addTextBreak(); 
@@ -604,10 +604,10 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
       // line returns. However we don't want to exclude spaces between styling
       // elements (these will be within a text run).
         if (!isset($state['textrun'])) {
-          $text = h2d_clean_text(trim($element->innertext));
+          $text = htmltodocx_clean_text(trim($element->innertext));
         }
         else {
-          $text = h2d_clean_text($element->innertext);
+          $text = htmltodocx_clean_text($element->innertext);
         }
         if (!empty($text)) {
           if (!isset($state['textrun'])) {
@@ -633,11 +633,11 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
         }
         if (in_array($element->tag, $allowed_children)) {
           array_unshift($state['parents'], $element->tag);
-          h2d_insert_html_recursive($phpword_element, $element->nodes, $state);
+          htmltodocx_insert_html_recursive($phpword_element, $element->nodes, $state);
           array_shift($state['parents']);
         }
         else {
-          $state['textrun']->addText(h2d_clean_text($element->innertext), $state['current_style']);
+          $state['textrun']->addText(htmltodocx_clean_text($element->innertext), $state['current_style']);
         }
       break;
       
@@ -669,10 +669,10 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
           $src = $element_src;
         }
         elseif (strpos($element_src, '/') === 0) {
-          $src = h2d_doc_root() . $element_src;
+          $src = htmltodocx_doc_root() . $element_src;
         }
         else {
-          $src = h2d_doc_root() . $state['base_path'] . $element_src; 
+          $src = htmltodocx_doc_root() . $state['base_path'] . $element_src; 
         }
         
         $phpword_element->addImage($src, $state['current_style']);
@@ -681,7 +681,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
 
       default:
         $state['textrun'] = $phpword_element->createTextRun();
-        $state['textrun']->addText(h2d_clean_text($element->innertext),  $state['current_style']);
+        $state['textrun']->addText(htmltodocx_clean_text($element->innertext),  $state['current_style']);
       break; 
     } 
     
@@ -695,7 +695,7 @@ function h2d_insert_html_recursive(&$phpword_element, $html_dom_array, &$state =
  * for use by the first or last item in a list.
  * 
  */
-function _h2d_add_list_start_end_spacing_style(&$state) {
+function _htmltodocx_add_list_start_end_spacing_style(&$state) {
   
   $state['list_style_after'] = isset($state['current_style']['spaceAfter']) ? array('spaceAfter' => $state['current_style']['spaceAfter']) : array();
   
@@ -707,7 +707,7 @@ function _h2d_add_list_start_end_spacing_style(&$state) {
  * Get the document root.
  * 
  */
-function h2d_doc_root() {
+function htmltodocx_doc_root() {
    
   $local_path = getenv("SCRIPT_NAME");
   // Should be available on both Apache and non Apache servers.
@@ -731,7 +731,7 @@ function h2d_doc_root() {
  * present.
  * 
  */
-function h2d_url_encode_chars($url) {
+function htmltodocx_url_encode_chars($url) {
   
   // List the characters in this array to be encoded:
   $encode_chars = array(' ');

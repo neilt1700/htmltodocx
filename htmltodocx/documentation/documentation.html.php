@@ -36,7 +36,7 @@ Placeholder for table of contents.
 <p><a href="http://htmltodocx.codeplex.com/">htmltodocx</a> currently processes the following elements:</p>
 
 <?php
-  $allowed_children = h2d_html_allowed_children($tag = NULL);
+  $allowed_children = htmltodocx_html_allowed_children($tag = NULL);
   
   $html = '<table><tbody><tr><th width="80">Element</th><th width="560">Allowed child elements</th></tr>';
   
@@ -50,10 +50,10 @@ Placeholder for table of contents.
 
 <h3>Inheritance</h3>
 
-<p>Attributes which can be inherited follow <a href="http://www.w3.org/TR/CSS21/propidx.html">standard CSS recommendations for inheritance</a>. See the function <code>h2d_inheritable_props()</code>. The following attributes can be inherited:</p>
+<p>Attributes which can be inherited follow <a href="http://www.w3.org/TR/CSS21/propidx.html">standard CSS recommendations for inheritance</a>. See the function <code>htmltodocx_inheritable_props()</code>. The following attributes can be inherited:</p>
 
 <?php
-  $inheritable_props = h2d_inheritable_props();
+  $inheritable_props = htmltodocx_inheritable_props();
   $html = '';
   foreach ($inheritable_props as $property) {
     $html .= '<code>' . $property . '</code><br>'; 

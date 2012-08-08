@@ -47,12 +47,12 @@ $initial_state = array(
   'structure_document' => TRUE, // h1..h6 titles will be Heading 1... Heading 6 styles in the Word document. Note that in this case child elements will be parsed as text only.
   
   // Optional - no default:    
-  'style_sheet' => h2d_docs_style(), // This is an array (the "style sheet") - returned by h2d_styles_example() here (in styles.inc) - see this function for an example of how to construct this array.
+  'style_sheet' => htmltodocx_docs_style(), // This is an array (the "style sheet") - returned by htmltodocx_styles_example() here (in styles.inc) - see this function for an example of how to construct this array.
   'table_of_contents_id' => 'word-table-of-contents', // If structure_document is TRUE, and this is defined, then any div element with this id will have its contents replaced with the Word table of contents when the Word document is created.
   );
 
 // Convert the HTML and put it into the PHPWord object
-h2d_insert_html($section, $html_dom_array[0]->nodes, $initial_state);
+htmltodocx_insert_html($section, $html_dom_array[0]->nodes, $initial_state);
 
 // Clear the HTML dom object:
 $html_dom->clear(); 

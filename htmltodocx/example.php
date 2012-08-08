@@ -44,11 +44,11 @@ $initial_state = array(
   'treat_div_as_paragraph' => TRUE, // If set to TRUE, each new div will trigger a new line in the Word document.
       
   // Optional - no default:    
-  'style_sheet' => h2d_styles_example(), // This is an array (the "style sheet") - returned by h2d_styles_example() here (in styles.inc) - see this function for an example of how to construct this array.
+  'style_sheet' => htmltodocx_styles_example(), // This is an array (the "style sheet") - returned by htmltodocx_styles_example() here (in styles.inc) - see this function for an example of how to construct this array.
   );    
 
 // Convert the HTML and put it into the PHPWord object
-h2d_insert_html($section, $html_dom_array[0]->nodes, $initial_state);
+htmltodocx_insert_html($section, $html_dom_array[0]->nodes, $initial_state);
 
 // Clear the HTML dom object:
 $html_dom->clear(); 

@@ -37,7 +37,7 @@ Date: 07 May 2012 20:47:59
 * Adjusted paragraph separation to work better with Word2007+ where no spacing is set in a style;
 * Entire (pseudo) list elements can now be styled - e.g. to set spaceAfter;
 * Can now add spaceAfter and spaceBefore on <ul> and <ol> elements for spacing before and after lists. Defaults to a single text break after a list if spaceAfter is not set;
-* Added inheritance check so that only properties that are typically inherited in css are inherited here (e.g. font styling) - see function h2d_inheritable_props().
+* Added inheritance check so that only properties that are typically inherited in css are inherited here (e.g. font styling) - see function htmltodocx_inheritable_props().
 
 Revision: 11235
 Author: SND\neilt17_cp
@@ -55,7 +55,7 @@ Added:
 Revision: 9738
 Author: SND\neilt17_cp
 Date: 18 March 2012 20:10:24
-Corrected handling of utf-8 characters in h2d_htmlconverter.php in h2d_clean_text().
+Corrected handling of utf-8 characters in h2d_htmlconverter.php in htmltodocx_clean_text().
 
 Revision: 9669
 Author: SND\neilt17_cp

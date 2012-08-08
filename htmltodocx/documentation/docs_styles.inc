@@ -4,7 +4,7 @@
 // This is an example of how a "style sheet" should be structured
 // to asign PHPWord styles to HTML elements, classes, and inline
 // styles.
-function h2d_docs_style() {
+function htmltodocx_docs_style() {
   
   // Set of default styles - 
   // to set initially whatever the element is:
