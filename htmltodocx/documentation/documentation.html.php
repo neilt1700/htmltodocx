@@ -1,5 +1,5 @@
 <?php
-require_once('../htmlconverter/h2d_htmlconverter.php');
+require_once('../htmltodocx_converter/h2d_htmlconverter.php');
 ?>
 <h1>HTML to docx Converter</h1>
 

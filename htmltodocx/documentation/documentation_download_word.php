@@ -6,7 +6,7 @@
 // Load the files we need:
 require_once '../phpword/PHPWord.php';
 require_once '../simplehtmldom/simple_html_dom.php';
-require_once '../htmlconverter/h2d_htmlconverter.php';
+require_once '../htmltodocx_converter/h2d_htmlconverter.php';
 require_once 'docs_styles.inc';
 
 // HTML fragment we want to parse:
