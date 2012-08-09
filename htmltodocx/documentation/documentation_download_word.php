@@ -9,6 +9,9 @@ require_once '../simplehtmldom/simple_html_dom.php';
 require_once '../htmltodocx_converter/h2d_htmlconverter.php';
 require_once 'docs_styles.inc';
 
+// Functions to support this example.
+require_once 'support_functions.inc';
+
 // HTML fragment we want to parse:
 ob_start(); //start output buffering
 require_once ('documentation.html.php'); //all output goes to buffer
@@ -27,13 +30,16 @@ $html_dom->load('<html><body>' . $html . '</body></html>');
 // Create the dom array of elements which we are going to work on:
 $html_dom_array = $html_dom->find('html',0)->children();
 
+$paths = htmltodocx_paths();
+
 // Provide some initial settings:
 $initial_state = array(
   // Required parameters:
   'phpword_object' => &$phpword_object, // Must be passed by reference.
-  'base_root' => 'http://test.local', // Required for link elements - change it to your domain.
-  'base_path' => '/htmltodocx/documentation/', // Path from base_root to whatever url your links are relative to.
-  
+  // 'base_root' => 'http://test.local', // Required for link elements - change it to your domain.
+  // 'base_path' => '/htmltodocx/documentation/', // Path from base_root to whatever url your links are relative to.
+  'base_root' => $paths['base_root'],
+  'base_path' => $paths['base_path'],
   // Optional parameters - showing the defaults if you don't set anything:
   'current_style' => array('size' => '11'), // The PHPWord style on the top element - may be inherited by descendent elements.
   'parents' => array(0 => 'body'), // Our parent is body.
