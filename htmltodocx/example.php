@@ -28,7 +28,7 @@ $html_dom->load('<html><body>' . $html . '</body></html>');
 $html_dom_array = $html_dom->find('html',0)->children();
 
 // We need this for setting base_root and base_path in the initial_state array
-// (below). We are using a functions here (derived from Drupal) to create these
+// (below). We are using a function here (derived from Drupal) to create these
 // paths automatically - you may want to do something different in your
 // implementation. This function is in the included file 
 // documentation/support_functions.inc.
