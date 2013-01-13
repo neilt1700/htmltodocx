@@ -65,7 +65,7 @@ Placeholder for table of contents.
  
 <h2>Special characters</h2>
 
-<p>All HTML entities <a href="http://www.w3schools.com/tags/ref_entities.asp">listed here</a> are supported. For example: &copy; (&amp;copy;), &pound; (&amp;pound;), &reg; (&amp;reg;).</p> 
+<p>All HTML entities <a href="http://www.w3schools.com/tags/ref_entities.asp">listed here</a> are supported. For example: &copy; (&amp;copy;), &pound; (&amp;pound;), &reg; (&amp;reg;), &amp; (&amp;amp;).</p> 
 
 <h2>Language support</h2>
 
