@@ -14,6 +14,7 @@ require_once 'documentation/support_functions.inc';
 
 // HTML fragment we want to parse:
 $html = file_get_contents('example_files/example_html.html');
+// $html = file_get_contents('test/table.html');
  
 // New Word Document:
 $phpword_object = new PHPWord();

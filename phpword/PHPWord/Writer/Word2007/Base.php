@@ -372,7 +372,6 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart {
 	protected function _writeTable(PHPWord_Shared_XMLWriter $objWriter = null, PHPWord_Section_Table $table) {
 		$_rows = $table->getRows();
 		$_cRows = count($_rows);
-		
 		if($_cRows > 0) {
 			$objWriter->startElement('w:tbl');
 				$tblStyle = $table->getStyle();
@@ -387,7 +386,40 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart {
 						$objWriter->endElement();
 					}
 				}
-
+        
+        // Insert tblGrid element so that Open/Libre office
+        // can size the table width properly. Word can work 
+        // out how to size the table appropriately without this
+        // although it will add this in if it is not present 
+        // following a save.
+        // DebugBreak();
+        $objWriter->startElement('w:tblGrid');
+          $cell_widths = array();
+          for($i=0; $i<$_cRows; $i++) {
+            $row = $_rows[$i];
+            $horizontal_offset = 0;
+            foreach($row as $cell) {
+              $width = $cell->getWidth();
+              // OO was doing a little better without this - had the
+              // table, it was still too wide - but not as bad as before,
+              // doing this, it is now either too narrow or too wide...
+              if ($width != 4500) {
+                $cell_widths[$horizontal_offset + $width] = $width;
+                $horizontal_offset = $horizontal_offset + $width;
+              }
+            }
+          }
+          ksort($cell_widths);
+          $current_horizontal_offset = 0;
+          foreach ($cell_widths as $horizontal_offset => $cell_width) {
+            $objWriter->startElement('w:gridCol');
+              $column_width = $horizontal_offset - $current_horizontal_offset;
+              $current_horizontal_offset = $horizontal_offset;
+              $objWriter->writeAttribute('w:w', $column_width);
+            $objWriter->endElement();
+          }
+        $objWriter->endElement();
+   
 				$_heights = $table->getRowHeights();
 				for($i=0; $i<$_cRows; $i++) {
 					$row = $_rows[$i];
