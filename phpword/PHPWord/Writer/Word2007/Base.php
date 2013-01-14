@@ -387,26 +387,32 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart {
 					}
 				}
         
-        // Insert tblGrid element so that Open/Libre office
+        // Insert a tblGrid element so that Open/Libre office
         // can size the table width properly. Word can work 
         // out how to size the table appropriately without this
         // although it will add this in if it is not present 
-        // following a save.
-        // DebugBreak();
+        // following a save:
+        global $section;
+        $settings = $section->getSettings();
+        $section_width = $settings->getPageSizeW() - ($settings->getMarginLeft() + $settings->getMarginRight());
         $objWriter->startElement('w:tblGrid');
           $cell_widths = array();
           for($i=0; $i<$_cRows; $i++) {
             $row = $_rows[$i];
+            $table_width = 0;
+            foreach ($row as $cell) {
+              $table_width += $cell->getWidth();
+            }
             $horizontal_offset = 0;
-            foreach($row as $cell) {
+            foreach ($row as $cell) {
               $width = $cell->getWidth();
-              // OO was doing a little better without this - had the
-              // table, it was still too wide - but not as bad as before,
-              // doing this, it is now either too narrow or too wide...
-              if ($width != 4500) {
-                $cell_widths[$horizontal_offset + $width] = $width;
-                $horizontal_offset = $horizontal_offset + $width;
+              if ($table_width > $section_width) {
+                // Scale the table to fit in the section width if
+                // it is larger than the section width:
+                $width = $width * ($section_width / $table_width);
               }
+              $cell_widths[$horizontal_offset + $width] = $width;
+              $horizontal_offset = $horizontal_offset + $width;
             }
           }
           ksort($cell_widths);
@@ -416,6 +422,7 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart {
               $column_width = $horizontal_offset - $current_horizontal_offset;
               $current_horizontal_offset = $horizontal_offset;
               $objWriter->writeAttribute('w:w', $column_width);
+              $objWriter->writeAttribute('w:type', 'dxa');
             $objWriter->endElement();
           }
         $objWriter->endElement();
