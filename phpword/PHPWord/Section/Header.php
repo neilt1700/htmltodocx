@@ -48,6 +48,13 @@ class PHPWord_Section_Header {
 	 * @var int
 	 */
 	private $_rId;
+  
+  /**
+   * General Document Settings
+   * 
+   * @var PHPWord_Section_Settings
+   */
+  private $_generalSettings;
 	
 	/**
 	 * Header Element Collection
@@ -59,8 +66,9 @@ class PHPWord_Section_Header {
 	/**
 	 * Create a new Header
 	 */
-	public function __construct($sectionCount) {
+	public function __construct($sectionCount, $generalSettings) {
 		$this->_headerCount = $sectionCount;
+    $this->_generalSettings = $generalSettings;
 	}
 	
 	/**
@@ -107,7 +115,7 @@ class PHPWord_Section_Header {
 	 * @return PHPWord_Section_Table
 	 */
 	public function addTable($style = null) {
-		$table = new PHPWord_Section_Table('header', $this->_headerCount, $style);
+		$table = new PHPWord_Section_Table('header', $this->_headerCount, $style, $this->_generalSettings);
 		$this->_elementCollection[] = $table;
 		return $table;
 	}

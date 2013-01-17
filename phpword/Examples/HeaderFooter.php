@@ -16,6 +16,12 @@ $table->addCell(4500)->addImage('_earth.jpg', array('width'=>50, 'height'=>50, '
 
 // Add footer
 $footer = $section->createFooter();
+
+$table = $footer->addTable();
+$table->addRow();
+$table->addCell(4500)->addText('This is the footer.');
+$table->addCell(4500)->addImage('_mars.jpg', array('width'=>50, 'height'=>50, 'align'=>'right'));
+
 $footer->addPreserveText('Page {PAGE} of {NUMPAGES}.', array('align'=>'center'));
 
 // Write some text

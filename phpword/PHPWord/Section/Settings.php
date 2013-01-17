@@ -297,6 +297,14 @@ class PHPWord_Section_Settings {
 	public function getPageSizeW() {
 		return $this->_pageSizeW;
 	}
+  
+  /**
+  * Get Inside Margins Page Width
+  * 
+  */
+  public function insideMarginsPageW() {
+    return $this->_pageSizeW - ($this->_marginLeft + $this->_marginRight);
+  }
 	
 	/**
 	 * Get Page Size Height

@@ -392,9 +392,7 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart {
         // out how to size the table appropriately without this
         // although it will add this in if it is not present 
         // following a save:
-        global $section;
-        $settings = $section->getSettings();
-        $section_width = $settings->getPageSizeW() - ($settings->getMarginLeft() + $settings->getMarginRight());
+        $section_width = $table->getDocumentSettings()->insideMarginsPageW();
         $objWriter->startElement('w:tblGrid');
           $cell_widths = array();
           for($i=0; $i<$_cRows; $i++) {

@@ -163,7 +163,7 @@ class PHPWord_Section {
 	 * @return PHPWord_Section_Table
 	 */
 	public function addTable($style = null) {
-		$table = new PHPWord_Section_Table('section', $this->_sectionCount, $style);
+		$table = new PHPWord_Section_Table('section', $this->_sectionCount, $style, $this->_settings);
 		$this->_elementCollection[] = $table;
 		return $table;
 	}
@@ -334,7 +334,7 @@ class PHPWord_Section {
 	 * @return PHPWord_Section_Header
 	 */
 	public function createHeader() {
-		$header = new PHPWord_Section_Header($this->_sectionCount);
+		$header = new PHPWord_Section_Header($this->_sectionCount, $this->_settings);
 		$this->_header = $header;
 		return $header;
 	}
@@ -354,7 +354,7 @@ class PHPWord_Section {
 	 * @return PHPWord_Section_Footer
 	 */
 	public function createFooter() {
-		$footer = new PHPWord_Section_Footer($this->_sectionCount);
+		$footer = new PHPWord_Section_Footer($this->_sectionCount, $this->_settings);
 		$this->_footer = $footer;
 		return $footer;
 	}
