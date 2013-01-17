@@ -78,7 +78,6 @@ header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 header('Content-Length: ' . filesize($h2d_file_uri));
-ob_clean();
 flush();
 $status = readfile($h2d_file_uri);
 unlink($h2d_file_uri);
