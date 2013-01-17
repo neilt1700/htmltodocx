@@ -15,6 +15,7 @@ $showable_files = array(
   'example.php' => '../example.php',
   'docs_styles.inc' => 'docs_styles.inc',
   'example_files/styles.inc' => '../example_files/styles.inc',
+  'htmltodocx_converter/h2d_htmlconverter.php' => '../htmltodocx_converter/h2d_htmlconverter.php',
 );
 
 if (isset($_GET['file']) && array_key_exists($_GET['file'], $showable_files)) {
