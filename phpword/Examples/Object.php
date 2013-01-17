@@ -16,5 +16,5 @@ $section->addObject('_sheet.xls');
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('Object.docx');
+$objWriter->save('tmp/Object.docx');
 ?>

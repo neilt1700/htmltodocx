@@ -45,5 +45,5 @@ echo 'Note: The pagenumbers in the TOC doesnt refresh automatically.';
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('TitleTOC.docx');
+$objWriter->save('tmp/TitleTOC.docx');
 ?>

@@ -43,5 +43,5 @@ $section->addListItem('List Item 7', 0, 'myOwnStyle', $listStyle, 'P-Style');
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('ListItem.docx');
+$objWriter->save('tmp/ListItem.docx');
 ?>

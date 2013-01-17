@@ -20,5 +20,5 @@ $section->addLink('http://www.yahoo.com', null, 'myOwnLinkStyle');
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('Link.docx');
+$objWriter->save('tmp/Link.docx');
 ?>

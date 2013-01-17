@@ -24,5 +24,5 @@ $section->addText('Some text...');
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('HeaderFooter.docx');
+$objWriter->save('tmp/HeaderFooter.docx');
 ?>

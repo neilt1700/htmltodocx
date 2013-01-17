@@ -23,5 +23,5 @@ $section->addText('I have only a paragraph style definition.', null, 'pStyle');
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('Text.docx');
+$objWriter->save('tmp/Text.docx');
 ?>

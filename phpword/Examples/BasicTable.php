@@ -22,5 +22,5 @@ for($r = 1; $r <= 10; $r++) { // Loop through rows
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('BasicTable.docx');
+$objWriter->save('tmp/BasicTable.docx');
 ?>

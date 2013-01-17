@@ -17,5 +17,5 @@ $section->addText('The header reference to the current section includes a waterm
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('Watermark.docx');
+$objWriter->save('tmp/Watermark.docx');
 ?>

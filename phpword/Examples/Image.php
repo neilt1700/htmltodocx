@@ -20,5 +20,5 @@ $section->addImage('_mars.jpg', array('width'=>100, 'height'=>100, 'align'=>'rig
 
 // Save File
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-$objWriter->save('Image.docx');
+$objWriter->save('tmp/Image.docx');
 ?>
