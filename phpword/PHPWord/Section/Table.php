@@ -71,11 +71,11 @@ class PHPWord_Section_Table {
 	private $_pCount;
   
   /**
-   * Table holder for document settings
+   * Section settings
    * 
    * @var PHPWord_Section_Settings
    */
-  private $_documentSettings;
+  private $_sectionSettings;
 	
 	/**
 	 * Create a new table
@@ -84,10 +84,10 @@ class PHPWord_Section_Table {
 	 * @param int $pCount
 	 * @param mixed $style
 	 */
-	public function __construct($insideOf, $pCount, $style = null, $settings) {
+	public function __construct($insideOf, $pCount, $style = null, $sectionSettings) {
 		$this->_insideOf = $insideOf;
 		$this->_pCount = $pCount;
-    $this->_documentSettings = $settings;
+    $this->_sectionSettings = $sectionSettings;
 		
 		if(!is_null($style)) {
 			if(is_array($style)) {
@@ -156,8 +156,8 @@ class PHPWord_Section_Table {
 		return $this->_style;
 	}
   
-  public function getDocumentSettings() {
-    return $this->_documentSettings;
+  public function getSectionSettings() {
+    return $this->_sectionSettings;
   }
 
 }

@@ -50,11 +50,11 @@ class PHPWord_Section_Footer {
 	private $_rId;
    
   /**
-   * General Document Settings
+   * Section Settings
    * 
    * @var PHPWord_Section_Settings
    */
-  private $_generalSettings;
+  private $_sectionSettings;
 	
 	/**
 	 * Footer Element Collection
@@ -66,9 +66,9 @@ class PHPWord_Section_Footer {
 	/**
 	 * Create a new Footer
 	 */
-	public function __construct($sectionCount, $generalSettings) {
+	public function __construct($sectionCount, $sectionSettings) {
 		$this->_footerCount = $sectionCount;
-    $this->_generalSettings = $generalSettings;
+    $this->_sectionSettings = $sectionSettings;
 	}
 	
 	/**
@@ -115,7 +115,7 @@ class PHPWord_Section_Footer {
 	 * @return PHPWord_Section_Table
 	 */
 	public function addTable($style = null) {
-		$table = new PHPWord_Section_Table('footer', $this->_footerCount, $style, $this->_generalSettings);
+		$table = new PHPWord_Section_Table('footer', $this->_footerCount, $style, $this->_sectionSettings);
 		$this->_elementCollection[] = $table;
 		return $table;
 	}

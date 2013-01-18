@@ -226,7 +226,7 @@ class PHPWord_Section {
 	}
 	
 	/**
-	 * Add a Image Element
+	 * Add an Image Element
 	 * 
 	 * @param string $src
 	 * @param mixed $style
