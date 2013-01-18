@@ -5,7 +5,8 @@ require_once '../PHPWord.php';
 $PHPWord = new PHPWord();
 
 // New portrait section
-$section = $PHPWord->createSection($sectionStyle);
+$section = $PHPWord->createSection();
+$section->addText('Oversized table resized to fit in LibreOffice (the default). Word will resize anyway.');
 $table = $section->addTable();
 
 for($r = 1; $r <= 10; $r++) { // Loop through rows
@@ -25,6 +26,7 @@ for($r = 1; $r <= 10; $r++) { // Loop through rows
 $sectionStyle = array('reduceTableWidthsToFit' => false);
 // New portrait section
 $section = $PHPWord->createSection($sectionStyle);
+$section->addText('Oversized table not resized to fit in LibreOffice. This table will go off the right hand edge of the page in Libre Office. Word will resize anyway - so the table will look the same as the one above in Word.');
 $table = $section->addTable();
 
 for($r = 1; $r <= 10; $r++) { // Loop through rows
