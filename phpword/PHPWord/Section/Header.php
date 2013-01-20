@@ -66,7 +66,7 @@ class PHPWord_Section_Header {
 	/**
 	 * Create a new Header
 	 */
-	public function __construct($sectionCount, $sectionSettings) {
+	public function __construct($sectionCount, $sectionSettings = null) {
 		$this->_headerCount = $sectionCount;
     $this->_sectionSettings = $sectionSettings;
 	}

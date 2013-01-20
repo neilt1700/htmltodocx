@@ -84,7 +84,7 @@ class PHPWord_Section_Table {
 	 * @param int $pCount
 	 * @param mixed $style
 	 */
-	public function __construct($insideOf, $pCount, $style = null, $sectionSettings) {
+	public function __construct($insideOf, $pCount, $style = null, $sectionSettings = null) {
 		$this->_insideOf = $insideOf;
 		$this->_pCount = $pCount;
     $this->_sectionSettings = $sectionSettings;

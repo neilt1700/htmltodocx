@@ -394,39 +394,41 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart {
         // this element can be switched on or off - this has no effect in Word
         // though - an oversized table will still be reduced to fit into the
         // available width.
-        $reduceTableWidthsToFit = $table->getSectionSettings()->getReduceTableWidthsToFit();
-        $section_width = $table->getSectionSettings()->insideMarginsPageW();
-        $objWriter->startElement('w:tblGrid');
-        $cell_widths = array();
-        for($i=0; $i<$_cRows; $i++) {
-          $row = $_rows[$i];
-          $table_width = 0;
-          foreach ($row as $cell) {
-            $table_width += $cell->getWidth();
-          }
-          $horizontal_offset = 0;
-          foreach ($row as $cell) {
-            $width = $cell->getWidth();
-            if ($table_width > $section_width && $reduceTableWidthsToFit) {
-              // Scale the table to fit in the section width if
-              // it is larger than the section width:
-              $width = $width * ($section_width / $table_width);
+        if (!is_null($table->getSectionSettings())) {
+          $reduceTableWidthsToFit = $table->getSectionSettings()->getReduceTableWidthsToFit();
+          $section_width = $table->getSectionSettings()->insideMarginsPageW();
+          $objWriter->startElement('w:tblGrid');
+          $cell_widths = array();
+          for($i=0; $i<$_cRows; $i++) {
+            $row = $_rows[$i];
+            $table_width = 0;
+            foreach ($row as $cell) {
+              $table_width += $cell->getWidth();
             }
-            $cell_widths[$horizontal_offset + $width] = $width;
-            $horizontal_offset = $horizontal_offset + $width;
+            $horizontal_offset = 0;
+            foreach ($row as $cell) {
+              $width = $cell->getWidth();
+              if ($table_width > $section_width && $reduceTableWidthsToFit) {
+                // Scale the table to fit in the section width if
+                // it is larger than the section width:
+                $width = $width * ($section_width / $table_width);
+              }
+              $cell_widths[$horizontal_offset + $width] = $width;
+              $horizontal_offset = $horizontal_offset + $width;
+            }
           }
-        }
-        ksort($cell_widths);
-        $current_horizontal_offset = 0;
-        foreach ($cell_widths as $horizontal_offset => $cell_width) {
-          $objWriter->startElement('w:gridCol');
-          $column_width = $horizontal_offset - $current_horizontal_offset;
-          $current_horizontal_offset = $horizontal_offset;
-          $objWriter->writeAttribute('w:w', $column_width);
-          $objWriter->writeAttribute('w:type', 'dxa');
+          ksort($cell_widths);
+          $current_horizontal_offset = 0;
+          foreach ($cell_widths as $horizontal_offset => $cell_width) {
+            $objWriter->startElement('w:gridCol');
+            $column_width = $horizontal_offset - $current_horizontal_offset;
+            $current_horizontal_offset = $horizontal_offset;
+            $objWriter->writeAttribute('w:w', $column_width);
+            $objWriter->writeAttribute('w:type', 'dxa');
+            $objWriter->endElement();
+          }
           $objWriter->endElement();
         }
-        $objWriter->endElement();
         
         $_heights = $table->getRowHeights();
           for($i=0; $i<$_cRows; $i++) {

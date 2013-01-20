@@ -66,7 +66,7 @@ class PHPWord_Section_Footer {
 	/**
 	 * Create a new Footer
 	 */
-	public function __construct($sectionCount, $sectionSettings) {
+	public function __construct($sectionCount, $sectionSettings = null) {
 		$this->_footerCount = $sectionCount;
     $this->_sectionSettings = $sectionSettings;
 	}
