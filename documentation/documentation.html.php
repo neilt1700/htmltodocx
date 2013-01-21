@@ -69,7 +69,7 @@ Placeholder for table of contents.
 
 <h2>Language support</h2>
 
-<p>Note PHPWord does not support utf8 character encoding. The version of PHPWord shipped with the docxtohtml converter is patched to deal with this: all instances of utf8_encode() have been replaced with a new function - utf8encode_dummy() - which simply returns its string argument. <a href="http://phpword.codeplex.com/discussions/261365">Discussion</a>.</p>
+<p>Note PHPWord does not support utf8 character encoding. The version of PHPWord shipped with the htmltodocx converter is patched to deal with this: all instances of utf8_encode() have been replaced with a new function - utf8encode_dummy() - which simply returns its string argument. <a href="http://phpword.codeplex.com/discussions/261365">Discussion</a>.</p>
 
 <p>For example:</p>
 
